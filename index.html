@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ToDo List</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <form>
+      <div class="center-container">
+        <fieldset class="todo-list">
+          <legend class="todo-list__title">Todo List</legend>
+          <!-- Add Task Input Field -->
+          <label class="todo-list__label">
+            <input type="text" id="newTask" placeholder="Add a task..." />
+            <button type="button" onclick="addTask()">Add</button>
+          </label>
+          <div class="tasks-container"></div>
+          <div class="delete-all-container">
+            <button type="button" onclick="deleteAllTasks()">Delete All</button>
+          </div>
+        </fieldset>
+      </div>
+    </form>
+    <style>
+      @import url("https://fonts.googleapis.com/css?family=Lato:400,400i,700");
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #000000;
+      }
+    
+      .todo-list {
+        display: flex;
+        flex-direction: column;
+        padding: 0 75px 10px 10px;
+        background: #162740;
+        border: transparent;
+      }
+    
+      .todo-list .todo-list__title {
+        padding: 3px 6px;
+        color: #f1faee;
+        background-color: #264456;
+      }
+    
+      .todo-list .todo-list__label {
+        display: flex;
+        align-items: center;
+        margin: 20px 0; /* Adjusted margin */
+        font-size: 24px;
+        font-family: Lato, sans-serif;
+        color: #f1faee;
+        cursor: pointer;
+      }
+    
+      .todo-list .todo-list__label input[type=checkbox] {
+        opacity: 0;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+      }
+    
+      .todo-list .todo-list__label input[type=checkbox] + .check {
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        border: 2px solid #f1faee;
+        transition: 0.2s;
+      }
+    
+      .todo-list .todo-list__label input[type=checkbox]:checked + .check {
+        width: 25px;
+        height: 15px;
+        border-top: transparent;
+        border-right: transparent;
+        transform: rotate(-45deg);
+      }
+    
+      .todo-list .todo-list__label input[type=checkbox] ~ span {
+        position: relative;
+        left: 40px;
+        white-space: nowrap;
+        transition: 0.5s;
+      }
+    
+      .todo-list .todo-list__label input[type=checkbox] ~ span::before {
+        position: absolute;
+        content: "";
+        top: 50%;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: #f1faee;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.5s;
+      }
+    
+      .todo-list .todo-list__label input[type=checkbox]:checked ~ span {
+        color: #585b57;
+      }
+    
+      .todo-list .todo-list__label input[type=checkbox]:checked ~ span::before {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+    
+      /* Add Task Input and Button Styling */
+      .todo-list__label input[type=text] {
+        padding: 8px;
+        margin-right: 8px;
+        font-size: 16px;
+        border: 1px solid #264456;
+        border-radius: 4px;
+        flex-grow: 1; /* Added to make the input field grow to fill the available space */
+      }
+    
+      .todo-list__label button {
+        padding: 8px 16px;
+        font-size: 16px;
+        background-color: #264456;
+        color: #f1faee;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+    
+      .todo-list__label button:hover {
+        background-color: #1a3147;
+      }
+
+      .tasks-container {
+        margin-bottom: 20px;
+      }
+
+      .delete-all-container button {
+        padding: 8px 16px;
+        font-size: 16px;
+        background-color: #d9534f;
+        color: #f1faee;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .delete-all-container button:hover {
+        background-color: #c9302c;
+      }
+    </style>
+    
+
+    <script>
+      function addTask() {
+        var newTaskInput = document.getElementById("newTask");
+        var newTaskValue = newTaskInput.value.trim();
+        if (newTaskValue !== "") {
+          var newTaskLabel = document.createElement("label");
+          newTaskLabel.className = "todo-list__label";
+          newTaskLabel.innerHTML = `
+            <input type="checkbox" name="" id="" />
+            <i class="check"></i>
+            <span>${newTaskValue}</span>
+          `;
+          document.querySelector(".tasks-container").appendChild(newTaskLabel);
+          newTaskInput.value = "";
+        }
+      }
+
+      function deleteAllTasks() {
+        var tasksContainer = document.querySelector(".tasks-container");
+        while (tasksContainer.firstChild) {
+          tasksContainer.removeChild(tasksContainer.firstChild);
+        }
+      }
+    </script>
+  </body>
+</html>
